@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Anime Character Offline Database Schema",
+  "description": "Schema for the anime character database. This extends the MyAnimeList API types from @shineiichijo/marika v3, adding additional metadata and computed fields for offline use.",
+  "type": "object",
+  "required": ["meta", "data"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["schemaVersion", "generatedAt", "license", "source", "totalCharacters"],
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "description": "Semantic version of this schema definition"
+        },
+        "generatedAt": {
+          "type": "string",
+          "description": "ISO time when this file was generated"
+        },
+        "license": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "repository": {
+          "type": "string",
+          "description": "Optional repository URL"
+        },
+        "source": {
+          "type": "object",
+          "required": ["name", "url", "library"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the data source, e.g. 'MyAnimeList API via Jikan v4'"
+            },
+            "url": {
+              "type": "string",
+              "description": "API documentation URL"
+            },
+            "library": {
+              "type": "string",
+              "description": "API client library name, e.g. '@shineiichijo/marika'"
+            },
+            "libraryVersion": {
+              "type": "string",
+              "description": "Version of @shineiichijo/marika used"
+            }
+          }
+        },
+        "totalCharacters": {
+          "type": "number",
+          "description": "Total number of characters in the database"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["single-file"],
+          "description": "Optional advisory about file layout/format"
+        }
+      }
+    },
+    "data": {
+      "type": "array",
+      "description": "Array of character entries, each extending the ICharacterFull type from @shineiichijo/marika",
+      "items": {
+        "type": "object",
+        "description": "Character entry that extends ICharacterFull from @shineiichijo/marika with additional fields",
+        "required": ["lastUpdated"],
+        "properties": {
+          "lastUpdated": {
+            "type": "string",
+            "description": "ISO timestamp for when this entry was last refreshed"
+          },
+          "voiceActorsByLanguage": {
+            "type": "object",
+            "description": "Optional precomputed groupings of voice actors by language. Uses IVoiceActor from @shineiichijo/marika",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VoiceActor"
+              }
+            }
+          },
+          "animeAppearances": {
+            "type": "array",
+            "description": "Optional denormalized anime appearances for convenience. Uses IAnime from @shineiichijo/marika",
+            "items": {
+              "type": "object",
+              "required": ["anime", "role"],
+              "properties": {
+                "anime": {
+                  "$ref": "#/definitions/Anime"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["Main", "Supporting", "Background"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "VoiceActor": {
+      "type": "object",
+      "description": "Voice actor type from @shineiichijo/marika/dist/types/anime.js (IVoiceActor). See Marika documentation for full type definition."
+    },
+    "Anime": {
+      "type": "object",
+      "description": "Anime type from @shineiichijo/marika/dist/types/anime.js (IAnime). See Marika documentation for full type definition."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "lastUpdate": "2025-08-14T04:25:59.177Z",
+  "totalCharacters": 5021,
+  "rawBytes": 46228211,
+  "latestShard": "shard-00001.jsonl",
+  "shardCount": 1,
+  "shardMaxRecords": 1000,
+  "runCompleted": 10,
+  "runAttempts": 10,
+  "runBroken": 0,
+  "concurrency": 8,
+  "baseDelayMs": 1020,
+  "processedAt": "2025-08-14T04:32:46.908Z",
+  "processedCharacters": 5129,
+  "processedDataSize": 50259146,
+  "processedDataSizeMin": 35375502,
+  "processedDataSizeGzip": 6414594,
+  "processedDataSizeMinGzip": 6139091,
+  "schemaVersion": "null"
+}
